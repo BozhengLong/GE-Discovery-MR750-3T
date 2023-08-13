@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PIU和Ghosting Ratio计算器</title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .input-group:last-of-type {
+            margin-bottom: 0px;
+        }
+        .form-wrapper input[type="text"] {
+            margin-bottom: 10px;
+        }
+        .input-group__item {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+        .input-group__item:nth-child(3) {
+            width: 50%;
+        }
+        .container {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-wrapper, .result-wrapper {
+        width: 50%;
+        }
+        .form-wrapper {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .result-wrapper {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+
+        .form-container {
+            width: 500px;
+            font-size: 20px;
+            margin-right: 50px;
+        }
+        .result-container {
+            width: 600px;
+            padding: 20px;
+            font-size: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        form {
+            width: 500px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        input[type="text"], input[type="button"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 20px;
+        }
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .result-field {
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        function calculate() {
+            // 获取用户输入的值
+            var max = Number(document.getElementById("max").value);
+            var min = Number(document.getElementById("min").value);
+            var avg = Number(document.getElementById("avg").value);
+            var left = Number(document.getElementById("left").value);
+            var right = Number(document.getElementById("right").value);
+            var top = Number(document.getElementById("top").value);
+            var bottom = Number(document.getElementById("bottom").value);
+
+            // 计算PIU和Ghosting Ratio
+            var piu = (2.0 * min) / (min + max);
+            var ratio = ((top + bottom) - (left + right)) / (2 * avg);
+
+            // 将结果显示在页面上
+            document.getElementById("piu").value = piu.toFixed(2);
+            document.getElementById("ratio").value = ratio.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form>
+                <h2>PIU和Ghosting Ratio计算器</h2>
+                <div class="input-group">
+                    <div class="input-group__item">
+                        <label for="max">最大平均值：</label>
+                        <input type="text" id="max" name="max" placeholder="请输入最大平均值" required>
+                    </div>
+                    <div class="input-group__item">
+                        <label for="min">最小平均值：</label>
+                        <input type="text" id="min" name="min" placeholder="请输入最小平均值" required>
+                    </div>
+                    <div class="input-group__item">
+                        <label for="avg">80%平均值：</label>
+                        <input type="text" id="avg" name="avg" placeholder="请输入80%平均值" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-group__item">
+                        <label for="left">左方平均值：</label>
+                        <input type="text" id="left" name="left" placeholder="请输入左方平均值" required>
+                    </div>
+                    <div class="input-group__item">
+                        <label for="right">右方平均值：</label>
+                        <input type="text" id="right" name="right" placeholder="请输入右方平均值" required>
+                    </div>
+                    <div class="input-group__item">
+                        <label for="top">上方平均值：</label>
+                        <input type="text" id="top" name="top" placeholder="请输入上方平均值" required>
+                    </div>
+                    <div class="input-group__item">
+                        <label for="bottom">下方平均值：</label>
+                        <input type="text" id="bottom" name="bottom" placeholder="请输入下方平均值" required>
+                    </div>
+                </div>
+                <input type="button" onclick="calculate()" value="计算">
+            </form>
+        </div>
+
+        <div class="result-container">
+            <h2>计算结果</h2>
+            <div class="result-field">
+                <label for="piu">PIU(2*最小值/(最大值+最小值))：</label>
+                <input type="text" id="piu" name="piu" readonly>
+            </div>
+            <div class="result-field">
+                <label for="ratio">Ghosting Ratio((上+下)-(左+右))/(2*80%平均值)：</label>
+                <input type="text" id="ratio" name="ratio" readonly>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function calculate() {
+            const max = Number(document.getElementById("max").value);
+            const min = Number(document.getElementById("min").value);
+            const avg = Number(document.getElementById("avg").value);
+            const left = Number(document.getElementById("left").value);
+            const right = Number(document.getElementById("right").value);
+            const top = Number(document.getElementById("top").value);
+            const bottom = Number(document.getElementById("bottom").value);
+    
+            const piu = (2.0 * min) / (min + max);
+            const ratio = ((top + bottom) - (left + right)) / (2 * avg);
+    
+            document.getElementById("piu").value = piu.toFixed(10);
+            document.getElementById("ratio").value = ratio.toFixed(10);
+        }
+    </script>
+    
+</body>
+</html>
